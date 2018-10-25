@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Minecraft Wiki Mirror</title>
     <script>
         //@ts-check
         function load_page(pageID) {
@@ -17,8 +17,18 @@
         window.addEventListener("load", e => {
             const url = new URL(document.URL);
             const page = url.pathname.replace(/^.+\//, "");
+            const content = document.getElementById("content");
+            content.addEventListener("click", e => {
+                const target = e.srcElement;
+                if (target.tagName === 'A') {
+                    const href = target.getAttribute('href');
+                    e.preventDefault();
+                    history.pushState(undefined, `${page} - Minecraft Wiki Mirror`, `/${page}`)
+                }
+            })
             load_page(page);
         })
+
     </script>
 </head>
 
