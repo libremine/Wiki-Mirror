@@ -2,17 +2,29 @@
 <html lang="en">
 
 <head>
-    <base href="https://libremine.github.io/Wiki-Mirror/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minecraft Wiki Mirror</title>
     <script>
         //@ts-check
+        function rewrite_links() {
+            for (var ls = document.links, numLinks = ls.length, i = 0; i < numLinks; i++) {
+                const href = ls[i].href;
+                if (href.startsWith("/")) {
+                    ls[i].addEventListener("click", e => {
+                        e.preventDefault();
+                        const page = href.replace(/^\//, "");
+                        history.pushState(page, `${page} - Minecraft Wiki Mirror`, `https://libremine.github.io/Wiki-Mirror/${page}`)
+                        load_page(page);
+                    })
+                }
+            }
+        }
         function load_page(pageID) {
-            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}&format=json`;
+            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}   &format=json`;
             const s = fetch(request_url)
-                .then(r => { console.log(r); return r.json() }).then(r => { console.log(r); document.getElementById("content").innerHTML = r.parse.text["*"] });
+                .then(r => { console.log(r); return r.json() }).then(r => { console.log(r); document.getElementById("content").innerHTML = r.parse.text["*"]; rewrite_links() });
         }
         window.addEventListener("popstate", (e) => {
             load_page(history.state);
@@ -22,18 +34,6 @@
             const page = url.pathname.replace(/^.+\//, "");
             const content = document.getElementById("content");
             history.replaceState(page, document.title)
-            content.addEventListener("click", e => {
-                const target = e.srcElement;
-                if (target.tagName === 'A') {
-                    const href = target.getAttribute('href');
-                    if (href.startsWith("/")) {
-                        e.preventDefault();
-                        const page = href.replace(/^\//, "");
-                        history.pushState(page, `${page} - Minecraft Wiki Mirror`, `https://libremine.github.io/Wiki-Mirror/${page}`)
-                        load_page(page);
-                    }
-                }
-            })
             load_page(page);
         })
 
