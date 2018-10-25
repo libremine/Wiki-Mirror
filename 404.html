@@ -15,7 +15,7 @@
         }
         window.addEventListener("load", e => {
             const url = new URL(document.URL);
-            const page = url.href.split("/", 1)[1];
+            const page = url.pathname.replace(/^.+\//, "");
             load_page(page);
         })
     </script>
