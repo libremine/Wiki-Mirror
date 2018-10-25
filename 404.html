@@ -10,7 +10,7 @@
         //@ts-check
         function rewrite_links() {
             for (var ls = document.links, numLinks = ls.length, i = 0; i < numLinks; i++) {
-                const href = ls[i].href;
+                const href = ls[i].getAttribute("href");
                 if (href.startsWith("/")) {
                     const page = href.replace(/^\//, "");
                     const link = `https://libremine.github.io/Wiki-Mirror/${page}`;
