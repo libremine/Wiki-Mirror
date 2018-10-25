@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <base href="https://libremine.github.io/Wiki-Mirror/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -20,7 +19,7 @@
                     if (r.parse && r.parse.text && r.parse.text["*"]) {
                         const text = r.parse.text["*"].replace(
                             /* Replace absolute relative urls (e.g. /1.13.2) with relative style urls affected by the 'base' element (i.e. 1.13.2) */
-                            /href\s*=\s*"\//g, 'href=\"'
+                            /href\s*=\s*"\//g, `href=\"${base}`
                         );
                         document.getElementById("content").innerHTML = text;
                     }
