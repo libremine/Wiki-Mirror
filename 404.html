@@ -21,6 +21,7 @@
             const url = new URL(document.URL);
             const page = url.pathname.replace(/^.+\//, "");
             const content = document.getElementById("content");
+            history.replaceState(page, document.title)
             content.addEventListener("click", e => {
                 const target = e.srcElement;
                 if (target.tagName === 'A') {
