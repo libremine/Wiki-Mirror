@@ -23,7 +23,9 @@
                 if (target.tagName === 'A') {
                     const href = target.getAttribute('href');
                     e.preventDefault();
-                    history.pushState(undefined, `${page} - Minecraft Wiki Mirror`, `/${page}`)
+                    const page = href.replace(/^\//, "");
+                    history.pushState(undefined, `${page} - Minecraft Wiki Mirror`, href)
+                    load_page(page);
                 }
             })
             load_page(page);
