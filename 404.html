@@ -22,10 +22,12 @@
                 const target = e.srcElement;
                 if (target.tagName === 'A') {
                     const href = target.getAttribute('href');
-                    e.preventDefault();
-                    const page = href.replace(/^\//, "");
-                    history.pushState(undefined, `${page} - Minecraft Wiki Mirror`, href)
-                    load_page(page);
+                    if (href.startsWith("/")) {
+                        e.preventDefault();
+                        const page = href.replace(/^\//, "");
+                        history.pushState(undefined, `${page} - Minecraft Wiki Mirror`, `https://libremine.github.io/Wiki-Mirror/${page}`)
+                        load_page(page);
+                    }
                 }
             })
             load_page(page);
