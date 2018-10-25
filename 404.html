@@ -12,17 +12,19 @@
             for (var ls = document.links, numLinks = ls.length, i = 0; i < numLinks; i++) {
                 const href = ls[i].href;
                 if (href.startsWith("/")) {
+                    const page = href.replace(/^\//, "");
+                    const link = `https://libremine.github.io/Wiki-Mirror/${page}`;
+                    ls[i].href = link;
                     ls[i].addEventListener("click", e => {
                         e.preventDefault();
-                        const page = href.replace(/^\//, "");
-                        history.pushState(page, `${page} - Minecraft Wiki Mirror`, `https://libremine.github.io/Wiki-Mirror/${page}`)
+                        history.pushState(page, `${page} - Minecraft Wiki Mirror`, link)
                         load_page(page);
                     })
                 }
             }
         }
         function load_page(pageID) {
-            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}   &format=json`;
+            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}&format=json`;
             const s = fetch(request_url)
                 .then(r => { console.log(r); return r.json() }).then(r => { console.log(r); document.getElementById("content").innerHTML = r.parse.text["*"]; rewrite_links() });
         }
