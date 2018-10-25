@@ -14,6 +14,9 @@
             const s = fetch(request_url)
                 .then(r => { console.log(r); return r.json() }).then(r => { console.log(r); document.getElementById("content").innerHTML = r.parse.text["*"] });
         }
+        window.addEventListener("popstate", (e) => {
+            load_page(history.state);
+        })
         window.addEventListener("load", e => {
             const url = new URL(document.URL);
             const page = url.pathname.replace(/^.+\//, "");
@@ -25,7 +28,7 @@
                     if (href.startsWith("/")) {
                         e.preventDefault();
                         const page = href.replace(/^\//, "");
-                        history.pushState(undefined, `${page} - Minecraft Wiki Mirror`, `https://libremine.github.io/Wiki-Mirror/${page}`)
+                        history.pushState(page, `${page} - Minecraft Wiki Mirror`, `https://libremine.github.io/Wiki-Mirror/${page}`)
                         load_page(page);
                     }
                 }
