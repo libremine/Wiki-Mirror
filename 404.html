@@ -2,52 +2,57 @@
 <html lang="en">
 
 <head>
+    <base href="https://libremine.github.io/Wiki-Mirror/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minecraft Wiki Mirror</title>
     <script>
+        const base = "https://libremine.github.io/Wiki-Mirror/";
         //@ts-check
-        function rewrite_links() {
-            for (var ls = document.links, numLinks = ls.length, i = 0; i < numLinks; i++) {
-                const href = ls[i].getAttribute("href");
-                if (href.startsWith("/")) {
-                    const page = href.replace(/^\//, "");
-                    const link = `https://libremine.github.io/Wiki-Mirror/${page}`;
-                    ls[i].href = link;
-                    ls[i].addEventListener("click", e => {
-                        e.preventDefault();
-                        history.pushState(page, `${page} - Minecraft Wiki Mirror`, link)
-                        load_page(page);
-                    })
-                }
-            }
-        }
-
         function load_page(pageID) {
-            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}&format=json`;
+            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}&format=json&redirects=true`;
             const s = fetch(request_url)
-                .then(r => { console.log(r); return r.json() }).then(r => { console.log(r); document.getElementById("content").innerHTML = r.parse.text["*"]; rewrite_links() });
+                .then(r => r.json()).catch(e => {
+                    /* Handle error gracefully */
+                }).then(r => {
+                    console.log(r);
+                    if (r.parse && r.parse.text && r.parse.text["*"]) {
+                        const text = r.parse.text["*"].replace(
+                            /* Replace absolute relative urls (e.g. /1.13.2) with relative style urls affected by the 'base' element (i.e. 1.13.2) */
+                            /href\s*=\s*"\//g, 'href=\"'
+                        );
+                        document.getElementById("content").innerHTML = text;
+                    }
+                });
         }
-        window.addEventListener("popstate", (e) => {
-            load_page(history.state);
-        })
         window.addEventListener("load", e => {
             const url = new URL(document.URL);
             const page = url.pathname.replace(/^.+\//, "");
-            const content = document.getElementById("content");
-            history.replaceState(page, document.title)
             load_page(page);
         })
 
     </script>
+    <style>
+        #content {
+            border-top: 10pt black;
+            width: 100%
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Minecraft WIKI Mirror</h1>
-    <p>Disclaimer: This project is not supported by Mojang, etc.</p>
-    <p>All content is available under the [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) license
-        unless otherwise stated, and reproduced under the terms of that license here </p>
+    <div id="header">
+        <a href="Minecraft_Wiki">
+            <h1>Minecraft WIKI Mirror</h1>
+        </a>
+        <p>This provides a minimal mirror of the Minecraft wiki featuring only page contents</p>
+        <p>Disclaimer: This project is not supported nor endorsed by the Minecraft Wiki</p>
+        <p>All content is available under the <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA
+                3.0</a> license on the Wiki unless otherwise stated, and reproduced under the terms of that license
+            here
+        </p>
+    </div>
     <div id="content">
     </div>
 </body>
