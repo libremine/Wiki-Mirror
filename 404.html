@@ -10,47 +10,94 @@
         const base = "https://libremine.github.io/Wiki-Mirror/";
         //@ts-check
         function load_page(pageID) {
+            console.log(`Loading page ${pageID}`);
             const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}&format=json&redirects=true`;
             const s = fetch(request_url)
                 .then(r => r.json()).catch(e => {
                     /* Handle error gracefully */
                 }).then(r => {
                     console.log(r);
-                    if (r.parse && r.parse.text && r.parse.text["*"]) {
-                        const text = r.parse.text["*"].replace(
-                            /* Replace absolute relative urls (e.g. /1.13.2) with relative style urls affected by the 'base' element (i.e. 1.13.2) */
-                            /href\s*=\s*"\//g, `href=\"${base}`
-                        );
-                        document.getElementById("content").innerHTML = text;
+                    if (r.parse) {
+                        if (r.parse.text && r.parse.text["*"]) {
+                            const text = r.parse.text["*"].replace(
+                                /* Replace absolute relative urls (e.g. /1.13.2) with relative style urls affected by the 'base' element (i.e. 1.13.2) */
+                                /href\s*=\s*"\//g, `href=\"${base}`
+                            );
+                            document.getElementById("content").innerHTML = text;
+                        }
+                        document.getElementById("page-title").textContent = r.parse.title;
+                        document.getElementById("page-link").href = `https://minecraft.gamepedia.com/${pageID}`;
+                        document.getElementById("page-link").textContent = "[Source]";
                     }
                 });
         }
         window.addEventListener("load", e => {
-            const url = new URL(document.URL);
-            const page = url.pathname.replace(/^.+\//, "");
-            load_page(page);
-        })
-
+            if (document.URL.startsWith(base)) {
+                const page = document.URL.substr(base.length - 1);;
+                load_page(page);
+            } else {
+                const url = new URL(document.URL);
+                load_page(url.pathname.substr(1)); // Exclude initial `/`
+            }
+        });
     </script>
     <style>
+        #home-link,
+        #home-link a {
+            font-size: 15pt;
+            text-decoration: none;
+            color: greenyellow;
+            background-color: slategray;
+            word-wrap: break-word;
+            padding: 0;
+        }
+
+        .header-content {
+            margin: 0 auto;
+        }
+
+        #header {
+            border-bottom: 1pt solid black;
+        }
+
+        #page-title {
+            font-size: 20pt;
+            text-decoration: underline;
+        }
+
+        #title-container {
+            text-align: left;
+            margin: 5pt auto 5pt 15pt;
+        }
+
         #content {
-            border-top: 1pt solid black;
             width: 100%
         }
     </style>
 </head>
 
 <body>
-    <div id="header">
-        <a href="Minecraft_Wiki">
-            <h1>Minecraft WIKI Mirror</h1>
-        </a>
-        <p>This provides a minimal mirror of the Minecraft wiki featuring only page contents</p>
-        <p>Disclaimer: This project is not supported nor endorsed by the Minecraft Wiki</p>
-        <p>All content is available under the <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA
-                3.0</a> license on the Wiki unless otherwise stated, and reproduced under the terms of that license
-            here
-        </p>
+
+    <table aria-label="Header" style="width: 100%;" id="header">
+        <tr class="header-content">
+            <td style="width: 250px;" id="home-link" style="vertical-align:top">
+                <a class="header-content" href="https://libremine.github.io/Wiki-Mirror/Minecraft_Wiki" id="homepage-link">
+                    <p class="header-content">Minecraft Wiki Mirror</p>
+                </a>
+            </td>
+            <td class="header-content" style="vertical-align:top">
+                <p class="header-content">A Minimalistic mirror of the Minecraft Wiki</p>
+                <p class="header-content">
+                    The below content is taken from the Minecraft Wiki, which is licensed under the
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a> license.
+                </p>
+            </td>
+        </tr>
+    </table>
+    <div>
+        <div id="title-container">
+            <span id="page-title"></span> <a id="page-link" target="_blank" rel="noopener noreferrer"></a>
+        </div>
     </div>
     <div id="content">
     </div>
