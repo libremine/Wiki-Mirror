@@ -10,7 +10,7 @@
     <script>
         //@ts-check
         function load_page(pageID) {
-            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&format=json&page=${pageID}`;
+            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}&format=json`;
             const s = fetch(request_url)
                 .then(r => { console.log(r); return r.json() }).then(r => { console.log(r); document.getElementById("content").innerHTML = r.parse.text["*"] });
         }
