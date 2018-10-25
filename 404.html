@@ -33,7 +33,7 @@
         }
         window.addEventListener("load", e => {
             if (document.URL.startsWith(base)) {
-                const page = document.URL.substr(base.length - 1);;
+                const page = document.URL.substr(base.length);
                 load_page(page);
             } else {
                 const url = new URL(document.URL);
