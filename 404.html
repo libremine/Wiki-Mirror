@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        //@ts-check
+        function load_page(pageID) {
+            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&format=json&page=${pageID}`;
+            const s = fetch(request_url)
+                .then(r => { console.log(r); return r.json() }).then(r => { console.log(r); document.getElementById("content").innerHTML = r.parse.text["*"] });
+        }
+        window.addEventListener("load", e => {
+            const url = new URL(document.URL);
+            const page = url.href.split("/", 1)[1];
+            load_page(page);
+        })
+    </script>
+</head>
+
+<body>
+    <h1>Minecraft WIKI Mirror</h1>
+    <p>Disclaimer: This project is not supported by Mojang, etc.</p>
+    <p>All content is available under the [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) license
+        unless otherwise stated, and reproduced under the terms of the license here </p>
+    <div id="content">
+    </div>
+</body>
+
+</html>
