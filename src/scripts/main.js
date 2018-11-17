@@ -1,4 +1,4 @@
-const base = "https://MulverineX.github.io/Wiki-Mirror/";
+const base = "https://mulverinex.github.io/Wiki-Mirror/";
 //@ts-check
 function load_page(pageID) {
     console.log(`Loading page ${pageID}`);
@@ -23,7 +23,7 @@ function load_page(pageID) {
         });
 }
 window.addEventListener("load", e => {
-    if (document.URL.startsWith(base)) {
+    if (document.URL.startsWith(toLowerCase(base))) {
         const page = document.URL.substr(base.length);
         load_page(page);
     } else {
