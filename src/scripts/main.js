@@ -23,7 +23,7 @@ function load_page(pageID) {
         });
 }
 window.addEventListener("load", e => {
-    if (document.URL.startsWith(toLowerCase(base))) {
+    if (document.URL.startsWith(base)) {
         const page = document.URL.substr(base.length);
         load_page(page);
     } else {
