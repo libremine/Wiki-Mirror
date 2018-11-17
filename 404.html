@@ -6,82 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minecraft Wiki Mirror</title>
-    <script>
-        const base = "https://libremine.github.io/Wiki-Mirror/";
-        //@ts-check
-        function load_page(pageID) {
-            console.log(`Loading page ${pageID}`);
-            const request_url = `https://minecraft.gamepedia.com/api.php?origin=*&action=parse&page=${pageID}&format=json&redirects=true`;
-            const s = fetch(request_url)
-                .then(r => r.json()).catch(e => {
-                    /* Handle error gracefully */
-                }).then(r => {
-                    console.log(r);
-                    if (r.parse) {
-                        if (r.parse.text && r.parse.text["*"]) {
-                            const text = r.parse.text["*"].replace(
-                                /* Replace absolute relative urls (e.g. /1.13.2) with relative style urls affected by the 'base' element (i.e. 1.13.2) */
-                                /href\s*=\s*"\//g, `href=\"${base}`
-                            );
-                            document.getElementById("content").innerHTML = text;
-                        }
-                        document.getElementById("page-title").textContent = r.parse.title;
-                        document.getElementById("page-link").href = `https://minecraft.gamepedia.com/${pageID}`;
-                        document.getElementById("page-link").textContent = "[Source]";
-                    }
-                });
-        }
-        window.addEventListener("load", e => {
-            if (document.URL.startsWith(base)) {
-                const page = document.URL.substr(base.length);
-                load_page(page);
-            } else {
-                const url = new URL(document.URL);
-                load_page(url.pathname.substr(1)); // Exclude initial `/`
-            }
-        });
-    </script>
-    <style>
-        #home-link,
-        #home-link a {
-            font-size: 15pt;
-            text-decoration: none;
-            color: greenyellow;
-            background-color: slategray;
-            word-wrap: break-word;
-            padding: 0;
-        }
 
-        .header-content {
-            margin: 0 auto;
-        }
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-        #header {
-            border-bottom: 1pt solid black;
-        }
+    <link rel="stylesheet/less" type="text/css" href="src/stylesheets/base.less" />
+    <link rel="stylesheet/less" type="text/css" href="src/stylesheets/themes/cleandark.less" />
+    <script src="src/scripts/main.js"></script>
 
-        #page-title {
-            font-size: 20pt;
-            text-decoration: underline;
-        }
-
-        #title-container {
-            text-align: left;
-            margin: 5pt auto 5pt 15pt;
-        }
-
-        #content {
-            width: 100%
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js"></script>
 </head>
 
 <body>
-
     <table aria-label="Header" style="width: 100%;" id="header">
         <tr class="header-content">
             <td style="width: 250px;" id="home-link" style="vertical-align:top">
-                <a class="header-content" href="https://libremine.github.io/Wiki-Mirror/Minecraft_Wiki" id="homepage-link">
+                <a class="header-content" href="https://MulverineX.github.io/Wiki-Mirror/Minecraft_Wiki" id="homepage-link">
                     <p class="header-content">Minecraft Wiki Mirror</p>
                 </a>
             </td>
