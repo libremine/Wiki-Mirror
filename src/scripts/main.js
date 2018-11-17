@@ -1,4 +1,4 @@
-const base = "https://mulverinex.github.io/Wiki-Mirror/";
+const base = "http://localhost:8080/";
 //@ts-check
 function load_page(pageID) {
     console.log(`Loading page ${pageID}`);
