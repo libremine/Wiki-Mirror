@@ -10,7 +10,7 @@ body {
     color: @accent-primary;
 }
 
-.header-content {
+.header-item {
     background: @background-secondary;
 }
 
@@ -23,13 +23,28 @@ div.mw-parser-output tr td {
     border: @none;
 }
 
-div.mcwiki-header {
-    color: @accent-primary;
-}
-
 a {
     color: @accent-secondary;
     text-decoration: @none;
+}
+
+span {
+    background: @none;
+}
+
+div.mcwiki-header {
+    color: @accent-primary;
+    & > div > div {
+        background: @background-secondary;
+        border: @none;
+    }
+}
+
+div.mw-parser-output {
+    & > div {
+        background: @none;
+        border: @none;
+    }
 }
 
 .edition-box {

@@ -4,22 +4,36 @@ body {
     margin: 0 auto;
 }
 
+p {
+    overflow-wrap: break-word;
+    width: 100%; //attempt at getting text to wrap on a page's content, still not working.
+}
+
 .header {
     width: 100%;
-    height: 2rem;
     margin: 0 auto;
-    padding-top: 0;
+    padding-top: .3rem;
+    padding-left: .3rem;
+    padding-right: .3rem;
 }
 
 .header-content {
-    height: .9rem;
+    height: 3rem;
     margin: 0 auto;
 }
 
+.header-item {
+    height: 100%;
+    margin-top: none;
+}
+
 .header-title {
-    
+    line-height: 2.7rem;
+    text-align: center;
+    width: 15rem;
     & a {
-        font-size: 15pt;
+        vertical-align: middle;
+        font-size: 1.25rem;
         text-decoration: none;
         color: greenyellow;
         word-wrap: break-word;
@@ -28,6 +42,14 @@ body {
 
 .header-info {
     vertical-align: top;
+    margin-left: .3rem;
+    margin-top: .3rem;
+    padding-top: .3rem;
+    padding-left: .3rem;
+    line-height: 1.4rem;
+    width: 49%;
+    text-align: center;
+    vertical-align: middle;
     & p {
         margin-top: 0;
         margin-bottom: 0;
@@ -43,6 +65,16 @@ body {
     }
 }
 
+#page-title {
+    font-size: 1.7rem;
+    text-decoration: underline;
+}
+
+#page-link {
+    float: right;
+}
+
 #content {
-    width: 100%
+    padding-left: 3rem;
+    width: 100%;
 }
