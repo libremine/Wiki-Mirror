@@ -1,6 +1,9 @@
-@background-primary: #1c1e1e;
-@background-secondary: #252828;
-@accent-primary: #43cccc;
+@background-primary: #1c1e1e !important;
+@background-secondary: #252828 !important;
+@accent-primary: #35a3a3 !important;
+@accent-secondary: #43cccc !important;
+@none: none !important;
+
 
 body {
     background: @background-primary;
@@ -10,3 +13,29 @@ body {
 .header-content {
     background: @background-secondary;
 }
+
+#content {
+    background: @background-primary;
+}
+
+div.mw-parser-output tr td {
+    background: @background-primary;
+    border: @none;
+}
+
+div.mcwiki-header {
+    color: @accent-primary;
+}
+
+a {
+    color: @accent-secondary;
+    text-decoration: @none;
+}
+
+.edition-box {
+    background: @background-secondary;
+    & span {
+        color: @accent-primary;
+    }
+}
+
