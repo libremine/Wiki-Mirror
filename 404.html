@@ -35,9 +35,7 @@
               ).href = `https://minecraft.gamepedia.com/${pageID}`;
               document.getElementById("page-link").textContent = "[Source]";
               if (index !== -1) {
-                window.setTimeout(() => {
-                  location.hash = "#" + pageID.substring(index + 1);
-                }, 50);
+                location.hash = "#" + id.substring(index + 1);
               }
             }
           });
