@@ -1,0 +1,89 @@
+@background-primary: #ffffff !important;
+@background-secondary: #eeeeee !important;
+@accent-primary: #252828 !important;
+@accent-secondary: #000000 !important;
+@none: none !important;
+
+
+body {
+    background: @background-primary;
+    color: @accent-primary;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: .4rem;
+    height: .6rem;
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+    border: none;
+    &:hover {
+        background: rgba(0,0,0,.1);
+        border-radius: .3rem;
+        transition: 500ms;
+    }
+}
+
+::-webkit-scrollbar-thumb {
+    background: @accent-primary; 
+    border-radius: .3rem;
+    &:hover {
+        background: @accent-secondary;
+        transition: 700ms;
+    }
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0,0,0,0);
+}
+
+.header-item {
+    background: @background-secondary;
+}
+
+#content {
+    background: @background-primary;
+}
+
+div.mw-parser-output tr td {
+    background: @background-primary;
+    border: @none;
+}
+
+a {
+    color: @accent-secondary;
+    text-decoration: @none;
+}
+
+span {
+    background: @none;
+}
+
+div.mcwiki-header {
+    color: @accent-primary;
+    & > div > div {
+        background: @background-secondary;
+        border: @none;
+    }
+}
+
+div.mw-parser-output {
+    & > div {
+        background: @none;
+        border: @none;
+    }
+}
+
+.edition-box {
+    background: @background-secondary;
+    & span {
+        color: @accent-primary;
+    }
+}
+
+.msgbox {
+    background: @background-secondary;
+    border-color: @background-secondary;
+}
